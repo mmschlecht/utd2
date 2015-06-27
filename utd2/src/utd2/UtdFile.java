@@ -8,34 +8,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtdFile {
-	private String fileName;
-	
+
+	private final String fileName;
+
 	private List<String> lines;
 
-	public UtdFile(String fileName) {
+	public UtdFile(final String fileName) {
 		this.fileName = fileName;
 		this.lines = new ArrayList<>();
 	}
-	
+
 	public void addLine(final String line) {
 		this.lines.add(line);
 	}
-	
+
+	public List<String> getLines() {
+		return this.lines;
+	}
+
+	public void setLines(final List<String> lines) {
+		this.lines = lines;
+	}
+
+	public String getContent() {
+		final StringBuilder content = new StringBuilder();
+
+		for (final String line : this.getLines()) {
+			content.append(line);
+		}
+
+		return content.toString();
+	}
+
 	private String getFileName() {
 		return this.fileName;
-	}
-	
-	public void write() throws FileNotFoundException, UnsupportedEncodingException {
-		PrintWriter writer = new PrintWriter(this.getFileName(), StandardCharsets.UTF_8.name());
-		
-		for (String line : lines) {
-			writer.println(line);
-		}
-		writer.close();
 	}
 
 	@Override
 	public String toString() {
-		return "UtdFile [fileName=" + fileName + ", lines=" + lines + "]";
+		return "UtdFile [fileName=" + this.fileName + ", lines=" + this.lines + "]";
+	}
+
+	public void write() throws FileNotFoundException, UnsupportedEncodingException {
+		final PrintWriter writer = new PrintWriter(this.getFileName(), StandardCharsets.UTF_8.name());
+
+		for (final String line : this.getLines()) {
+			writer.println(line);
+		}
+
+		writer.close();
 	}
 }
